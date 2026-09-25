@@ -1,12 +1,18 @@
 """接口冒烟测试：覆盖认证、鉴权、CRUD、换电与统计，并校验中文编码。"""
 import uuid
 
+import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
-from app.seed import init_db
 
-init_db()
+
+@pytest.fixture(autouse=True)
+def _use_isolated_db(isolated_db):
+    """每个用例都在独立的临时数据库上运行（见 tests/conftest.py）。"""
+    yield
+
+
 client = TestClient(app)
 
 

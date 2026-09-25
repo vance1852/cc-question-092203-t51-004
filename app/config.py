@@ -5,9 +5,10 @@
 import os
 
 # 数据库文件路径（SQLite，本地文件，开箱即用）
+# 可通过环境变量 APP_DB_PATH 覆盖；也可用 APP_DATABASE_URL 指定完整连接串
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DB_PATH = os.path.join(BASE_DIR, "data.db")
-DATABASE_URL = f"sqlite:///{DB_PATH}"
+DB_PATH = os.environ.get("APP_DB_PATH", os.path.join(BASE_DIR, "data.db"))
+DATABASE_URL = os.environ.get("APP_DATABASE_URL", f"sqlite:///{DB_PATH}")
 
 # JWT 配置
 SECRET_KEY = os.getenv("APP_SECRET_KEY", "swap-station-admin-dev-secret-key-change-me")

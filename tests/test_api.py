@@ -1,12 +1,14 @@
-"""接口冒烟测试：覆盖认证、鉴权、CRUD、换电与统计，并校验中文编码。"""
+"""接口冒烟测试：覆盖认证、鉴权、CRUD、换电与统计，并校验中文编码。
+
+数据库生命周期由 conftest.py 统一管理：每个用例都在隔离的临时数据库
+上运行，并用例开始前重置为完整种子状态，因此用例间互不影响。
+"""
 import uuid
 
 from fastapi.testclient import TestClient
 
 from app.main import app
-from app.seed import init_db
 
-init_db()
 client = TestClient(app)
 
 
